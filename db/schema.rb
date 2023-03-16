@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_17_031441) do
+ActiveRecord::Schema.define(version: 2023_03_16_031411) do
 
   create_table "categories", charset: "utf8mb4", force: :cascade do |t|
     t.string "major_category_name"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 2022_11_17_031441) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", force: :cascade do |t|
+    t.text "content"
+    t.bigint "product_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_reviews_on_product_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
@@ -51,4 +61,6 @@ ActiveRecord::Schema.define(version: 2022_11_17_031441) do
   end
 
   add_foreign_key "products", "categories"
+  add_foreign_key "reviews", "products"
+  add_foreign_key "reviews", "users"
 end
